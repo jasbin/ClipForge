@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+/* Design tokens. Components use the semantic names below (bg-surface, text-muted, border-line…)
+   so light and dark themes come from one place. */
+:root {
+  --bg: #f7f7f8;
+  --surface: #ffffff;
+  --surface-2: #f2f2f4;
+  --hover: rgb(0 0 0 / 0.04);
+  --line: #e4e4e7;
+  --line-strong: #d4d4d8;
+  --fg: #18181b;
+  --muted: #71717a;
+  --accent: #7c3aed;
+  --accent-hover: #6d28d9;
+  --accent-soft: rgb(124 58 237 / 0.1);
+  --accent-fg: #6d28d9;
+  --on-accent: #ffffff;
+  --success: #059669;
+  --success-soft: rgb(5 150 105 / 0.1);
+  --warning: #b45309;
+  --warning-soft: rgb(217 119 6 / 0.12);
+  --danger: #dc2626;
+  --danger-soft: rgb(220 38 38 / 0.1);
+  --ring: rgb(124 58 237 / 0.45);
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 1px 3px rgb(0 0 0 / 0.06);
+  --shadow-lg: 0 10px 30px -10px rgb(0 0 0 / 0.25);
+  color-scheme: light;
+}
+
+/* Dark tokens appear twice: once for an explicit choice, once for the system preference. */
+:root[data-theme="dark"] {
+  --bg: #09090b;
+  --surface: #131316;
+  --surface-2: #1c1c21;
+  --hover: rgb(255 255 255 / 0.05);
+  --line: #27272a;
+  --line-strong: #3f3f46;
+  --fg: #ededef;
+  --muted: #a1a1aa;
+  --accent: #8b5cf6;
+  --accent-hover: #7c3aed;
+  --accent-soft: rgb(139 92 246 / 0.16);
+  --accent-fg: #c4b5fd;
+  --on-accent: #ffffff;
+  --success: #34d399;
+  --success-soft: rgb(52 211 153 / 0.14);
+  --warning: #fbbf24;
+  --warning-soft: rgb(251 191 36 / 0.14);
+  --danger: #f87171;
+  --danger-soft: rgb(248 113 113 / 0.14);
+  --ring: rgb(167 139 250 / 0.5);
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 10px 30px -10px rgb(0 0 0 / 0.7);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #09090b;
+    --surface: #131316;
+    --surface-2: #1c1c21;
+    --hover: rgb(255 255 255 / 0.05);
+    --line: #27272a;
+    --line-strong: #3f3f46;
+    --fg: #ededef;
+    --muted: #a1a1aa;
+    --accent: #8b5cf6;
+    --accent-hover: #7c3aed;
+    --accent-soft: rgb(139 92 246 / 0.16);
+    --accent-fg: #c4b5fd;
+    --on-accent: #ffffff;
+    --success: #34d399;
+    --success-soft: rgb(52 211 153 / 0.14);
+    --warning: #fbbf24;
+    --warning-soft: rgb(251 191 36 / 0.14);
+    --danger: #f87171;
+    --danger-soft: rgb(248 113 113 / 0.14);
+    --ring: rgb(167 139 250 / 0.5);
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-lg: 0 10px 30px -10px rgb(0 0 0 / 0.7);
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-hover: var(--hover);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-fg: var(--accent-fg);
+  --color-on-accent: var(--on-accent);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-ring: var(--ring);
+  --shadow-card: var(--shadow);
+  --shadow-pop: var(--shadow-lg);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  min-height: 100dvh;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--accent-soft);
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(2px);
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.animate-toast-in {
+  animation: toast-in 180ms ease-out;
+}
+
+@keyframes indeterminate {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+.animate-indeterminate {
+  animation: indeterminate 1.4s ease-in-out infinite;
+}
+
+/* Matches the ASS pop in captions.py: 100% → 112% → 106%. */
+@keyframes caption-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1.06); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
